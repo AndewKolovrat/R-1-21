@@ -6,45 +6,51 @@ import AddChatWindow from '@containers/AddChatWindow';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addChat } from '@actions/chats';
+import { addChat, loadChats } from '@actions/chats';
 
-const ChatList = (props) => {
+export class ChatList extends React.Component {
 
-    const { chatID, chats, haseNewMsg } = props;
-    const Chats = Object.values(chats).map((el, i) => <li key={i} className='chats__item'>
-        <Button name={el.title}
-            className='item__btn'
-            variant="contained"
-            disabled={haseNewMsg == -1 && (el.id == chatID || haseNewMsg == el.id)}
-            onClick={() => handleNavigate(`/chat/${el.id}`)}
-            color="primary">
-            {el.title}
-        </Button>
-    </li >);
+    constructor(props) {
+        super(props);
+        this.props.loadChats();
+    }
 
-    const handleNavigate = link => {
-        props.push(link);
-    };
+    handleNavigate = link => {
+        this.props.push(link);
+    }
 
-    const handlerAddChat = name => {
+    handlerAddChat = name => {
         if (!name) return;
         const { addChat } = props;
         addChat(name);
     }
 
-    return (
-        <div className="chats">
+    render() {
+        const { chatID, chats, haseNewMsg } = this.props;
+        const Chats = Object.values(chats).map((el, i) => <li key={i} className='chats__item'>
+            <Button name={el.title}
+                className='item__btn'
+                variant="contained"
+                disabled={haseNewMsg == -1 && (el.id == chatID || haseNewMsg == el.id)}
+                onClick={() => this.handleNavigate(`/chat/${el.id}`)}
+                color="primary">
+                {el.title}
+            </Button>
+        </li >);
+
+        return (<div className="chats">
             <ul className="chats__list">
                 {Chats}
             </ul>
-            <AddChatWindow addChat={handlerAddChat} />
-        </div>
-    );
+            <AddChatWindow addChat={this.handlerAddChat} />
+        </div>);
+    }
+
 }
 
 const mapStateToProps = ({ chatsReducer }) => ({
     chats: chatsReducer.chats,
     haseNewMsg: chatsReducer.newMsg
 });
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push, loadChats }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

@@ -87,8 +87,13 @@ module.exports = {
         port: 3300,
         hot: true,
         open: false,
-        historyApiFallback: {
-            index: 'index.html'
+        proxy: {
+            '/api': {
+                target: 'http://localhost:9090',
+                pathRewrite: { '^/api': '' },
+                secure: false,
+                changeOrigin: true
+            }
         }
-    },
+    }
 };

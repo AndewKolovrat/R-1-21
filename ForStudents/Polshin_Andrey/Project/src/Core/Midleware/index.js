@@ -1,4 +1,5 @@
 import bot from './Bot';
 import newMsgFlug from './newMsgFlug'
+import { apiMiddleware } from 'redux-api-middleware';
 
-export default [bot, newMsgFlug];
+export default [apiMiddleware, bot, newMsgFlug];

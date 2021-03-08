@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "api": "nodemon server",
     "dev": "webpack serve --mode development",
     "build": "webpack --mode development",
     "createFull": "node utils/creator --s --n",
@@ -23,8 +24,10 @@
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "connected-react-router": "^6.9.1",
+    "express": "^4.17.1",
     "history": "^4.10.1",
     "minimist": "^1.2.5",
+    "nodemon": "^2.0.7",
     "react": "^17.0.1",
     "react-addons-update": "^15.6.3",
     "react-dom": "^17.0.1",
